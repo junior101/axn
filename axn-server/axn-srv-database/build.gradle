@@ -1,0 +1,23 @@
+version '0.1.0'
+// Copy property file
+compileJava.doFirst {
+    copy {
+        from "$projectDir/data/config/env.${rootProject.ext.buildProfile}.properties"
+        into "$projectDir/src/main/resources"
+        rename { String fileName ->
+            'env.properties'
+        }
+    }
+}
+// Module dependencies
+dependencies {
+    compile "org.springframework:spring-context"
+    compile "org.springframework:spring-test"
+    compile "org.springframework.data:spring-data-jpa"
+    compile group: 'com.zaxxer', name: 'HikariCP', version: "$rootProject.ext.hikariCPVersion"
+    compile group: 'org.hibernate', name: 'hibernate-core', version: "$rootProject.ext.hibernateVersion"
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: "$rootProject.ext.hibernateVersion"
+    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: "$rootProject.ext.hibernateJpaApiVersion"
+    compile group: 'org.postgresql', name: 'postgresql', version: "$rootProject.ext.postgresqlDriverVersion"
+    compile group: 'com.h2database', name: 'h2', version: "$rootProject.ext.h2DriverVersion"
+}

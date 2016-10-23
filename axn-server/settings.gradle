@@ -1,0 +1,5 @@
+rootProject.name = 'axn-server'
+
+include 'axn-srv-database'
+include 'axn-srv-rest-api'
+

@@ -1,0 +1,1 @@
+Git need not empty directory

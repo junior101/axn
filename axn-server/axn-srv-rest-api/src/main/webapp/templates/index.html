@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RESTful API Personal website">
+    <meta name="author" content="Aleksey Nikitenko <axnikitenko@gmail.com>">
+    <title>RESTful API Personal website</title>
+</head>
+<body>
+<h1>RESTful API</h1>
+<h1>Personal website of Aleksey Nikitenko</h1>
+<!--/*@thymesVar id="version" type="java.lang.String"*/-->
+<h2>Version:&nbsp;<span th:text="${version}"></span></h2>
+<!--/*@thymesVar id="build_date" type="java.lang.String"*/-->
+<h2>Build date:&nbsp;<span th:text="${build_date}"></span></h2>
+</body>
+</html>

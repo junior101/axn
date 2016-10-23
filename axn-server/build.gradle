@@ -1,0 +1,57 @@
+group 'com.axn'
+if (!hasProperty("buildProfile")) ext.buildProfile = "debug"
+// Global variables for version of libraries
+ext {
+    jUnitVersion = "4.12"
+    slf4jLog4jVersion = "1.7.21"
+    log4jVersion = "1.2.17"
+    lombokVersion = "1.16.10"
+    jacksonVersion = "2.8.3"
+    javaxServletApiVersion = "3.1.0"
+    thymeleafVersion = "3.0.2.RELEASE"
+    commonsLoggingVersion = "1.2"
+    hikariCPVersion = "2.5.1"
+    hibernateVersion = "5.2.2.Final"
+    hibernateJpaApiVersion = "1.0.0.Final"
+    postgresqlDriverVersion = "9.4.1211"
+    h2DriverVersion = "1.4.192"
+}
+// Definition for dependency-management-plugin of spring
+buildscript {
+    ext {
+        dependencyManagementPluginVersion = "0.6.1.RELEASE"
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:$dependencyManagementPluginVersion"
+    }
+}
+allprojects {
+    apply plugin: 'io.spring.dependency-management'
+    dependencyManagement {
+        imports {
+            mavenBom 'io.spring.platform:platform-bom:Athens-RELEASE'
+        }
+    }
+}
+// Build settings for sub-projects
+subprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        testCompile "junit:junit:$rootProject.ext.jUnitVersion"
+        compile group: 'org.slf4j', name: 'slf4j-log4j12', version: "$rootProject.ext.slf4jLog4jVersion"
+        compile group: 'log4j', name: 'log4j', version: "$rootProject.ext.log4jVersion"
+        compile group: 'org.projectlombok', name: 'lombok', version: "$rootProject.ext.lombokVersion"
+    }
+}

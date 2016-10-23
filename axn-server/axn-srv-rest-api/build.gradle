@@ -1,0 +1,32 @@
+version '0.1.0'
+apply plugin: 'war'
+compileJava.doFirst {
+    // Generate version file
+    new File("$projectDir/src/main/resources/version.properties").withWriter { w ->
+        Properties p = new Properties()
+        p['server.version'] = project.version.toString()
+        p['server.build_date'] = new Date().toString()
+        p.store w, null
+    }
+    // Copy log4j property file
+    copy {
+        from "$projectDir/data/log4j.${rootProject.ext.buildProfile}.properties"
+        into "$projectDir/src/main/resources"
+        rename { String fileName ->
+            'log4j.properties'
+        }
+    }
+}
+// Project dependencies
+dependencies {
+    compile project(':axn-srv-database')
+    compile "org.springframework:spring-context"
+    compile "org.springframework:spring-core"
+    compile "org.springframework:spring-webmvc"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "$rootProject.ext.jacksonVersion"
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "$rootProject.ext.jacksonVersion"
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: "$rootProject.ext.javaxServletApiVersion"
+    compile group: 'commons-logging', name: 'commons-logging', version: "$rootProject.ext.commonsLoggingVersion"
+    compile group: 'org.thymeleaf', name: 'thymeleaf', version: "$rootProject.ext.thymeleafVersion"
+    compile group: 'org.thymeleaf', name: 'thymeleaf-spring4', version: "$rootProject.ext.thymeleafVersion"
+}
